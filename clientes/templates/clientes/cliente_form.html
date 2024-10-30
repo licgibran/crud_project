@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista de Clientes</title>
+
+    <!-- Cargar archivos estáticos -->
+    {% load static %}
+
+    <!-- Incluir el archivo CSS -->
+    <link rel="stylesheet" type="text/css" href="{% static 'clientes/styles.css' %}">
+</head>
+<body>
+    
+    <div class="container">
+        
+        <h1>{% if form.instance.pk %}Editar Cliente{% else %}Crear Cliente{% endif %}</h1>
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ form.as_p }}
+            
+            {% if cliente.foto %}
+                <div class="image-container">
+                    <p>Foto actual:</p>
+                    <img src="{{ cliente.foto.url }}" alt="Foto de {{ cliente.nombre }}" width="150">
+                </div>
+            {% endif %}
+            <button type="submit">Guardar</button>
+        </form>
+        <a href="{% url 'cliente_list' %}">Cancelar</a>
+    </div>
+    
+
+</body>
